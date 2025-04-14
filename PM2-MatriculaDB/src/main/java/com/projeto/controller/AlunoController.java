@@ -4,12 +4,15 @@ import com.projeto.model.Aluno;
 import com.projeto.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 
+
+import repositories.AlunoRepository;
+
+
 import java.util.List;
 import java.util.Scanner;
 
 public class AlunoController {
 
-        EntityManager em = JPAUtil.getEntityManager();
 	public static void cadastrarAluno(Scanner scanner) {
 		EntityManager em = JPAUtil.getEntityManager();
 
@@ -43,7 +46,9 @@ public class AlunoController {
 		em.getTransaction().begin();
 		em.persist(new Aluno(nome, ra, cpf, email, telefone));
 		em.getTransaction().commit();
+		em.close();
 
+		System.out.println("Aluno cadastrado com sucesso!");
 	}
 
 	public static void listarAlunos() {
