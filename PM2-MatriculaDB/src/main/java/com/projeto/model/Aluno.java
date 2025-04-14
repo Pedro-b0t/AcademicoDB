@@ -4,43 +4,89 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+// Marca a classe como uma entidade JPA (será mapeada para uma tabela do banco de dados)
 @Entity
 public class Aluno {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private String nome;
-    private String ra;
-    private String cpf;
-    private String email;
-    private String telefone;
+	// Define o identificador da entidade (chave primária)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto incremento
+	private Long id;
 
-    @ManyToMany(mappedBy = "alunos")
-    private Set<Curso> cursos = new HashSet<>();
+	// Atributos do aluno
+	private String nome;
+	private String ra;
+	private String cpf;
+	private String email;
+	private String telefone;
 
-    public Aluno() {}
+	// Relacionamento muitos-para-muitos com cursos
+	// mappedBy indica que o lado "dono" da relação está na entidade Curso
+	@ManyToMany(mappedBy = "alunos")
+	private Set<Curso> cursos = new HashSet<>();
 
-    public Aluno(String nome, String ra, String cpf, String email, String telefone) {
-        this.nome = nome;
-        this.ra = ra;
-        this.cpf = cpf;
-        this.email = email;
-        this.telefone = telefone;
-    }
+	// Construtor vazio exigido pelo JPA
+	public Aluno() {
+	}
 
-    public Long getId() { return id; }
-    public String getNome() { return nome; }
-    public String getRa() { return ra; }
-    public String getCpf() { return cpf; }
-    public String getEmail() { return email; }
-    public String getTelefone() { return telefone; }
+	// Construtor com todos os campos (exceto ID e cursos, que são gerados
+	// automaticamente)
+	public Aluno(String nome, String ra, String cpf, String email, String telefone) {
+		this.nome = nome;
+		this.ra = ra;
+		this.cpf = cpf;
+		this.email = email;
+		this.telefone = telefone;
+	}
 
-    public void setNome(String nome) { this.nome = nome; }
-    public void setRa(String ra) { this.ra = ra; }
-    public void setCpf(String cpf) { this.cpf = cpf; }
-    public void setEmail(String email) { this.email = email; }
-    public void setTelefone(String telefone) { this.telefone = telefone; }
+	// Getters e setters
 
-    public Set<Curso> getCursos() { return cursos; }
+	public Long getId() {
+		return id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getRa() {
+		return ra;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setRa(String ra) {
+		this.ra = ra;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	// Retorna os cursos nos quais o aluno está matriculado
+	public Set<Curso> getCursos() {
+		return cursos;
+	}
 }

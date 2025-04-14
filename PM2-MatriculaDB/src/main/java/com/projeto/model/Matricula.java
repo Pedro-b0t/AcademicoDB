@@ -2,43 +2,54 @@ package com.projeto.model;
 
 import jakarta.persistence.*;
 
+// Define que esta classe é uma entidade JPA e será mapeada para a tabela "matricula"
 @Entity
 @Table(name = "matricula")
 public class Matricula {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @ManyToOne
-    private Aluno aluno;
+	// Identificador único da matrícula (chave primária), gerado automaticamente
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    private Curso curso;
+	// Relacionamento muitos-para-um com a entidade Aluno
+	// Uma matrícula está associada a um aluno
+	@ManyToOne
+	private Aluno aluno;
 
-    public Matricula() {}
+	// Relacionamento muitos-para-um com a entidade Curso
+	// Uma matrícula está associada a um curso
+	@ManyToOne
+	private Curso curso;
 
-    public Matricula(Aluno aluno, Curso curso) {
-        this.aluno = aluno;
-        this.curso = curso;
-    }
+	// Construtor padrão exigido pelo JPA
+	public Matricula() {
+	}
 
-    public Long getId() {
-        return id;
-    }
+	// Construtor utilizado para criar uma nova matrícula entre um aluno e um curso
+	public Matricula(Aluno aluno, Curso curso) {
+		this.aluno = aluno;
+		this.curso = curso;
+	}
 
-    public Aluno getAluno() {
-        return aluno;
-    }
+	// Getters e Setters
+	public Long getId() {
+		return id;
+	}
 
-    public Curso getCurso() {
-        return curso;
-    }
+	public Aluno getAluno() {
+		return aluno;
+	}
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
-    }
+	public Curso getCurso() {
+		return curso;
+	}
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
 }
