@@ -20,7 +20,7 @@ O sistema foi desenvolvido como parte de um trabalho da disciplina de **Programa
 - JDBC (ou ORM, se estiver sendo utilizado)
 
 ## 📁 Estrutura do Projeto
-
+```plaintext
 └───PM2-MatriculaDB
     │   .classpath
     │   .gitignore
