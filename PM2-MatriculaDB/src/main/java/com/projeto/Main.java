@@ -1,73 +1,103 @@
 package com.projeto;
 
-// Importações das classes dos controladores e utilitários
 import com.projeto.controller.AlunoController;
 import com.projeto.controller.CursoController;
 import com.projeto.controller.MatriculaController;
-import com.projeto.model.Aluno;
+import com.projeto.model.Usuario;
 import com.projeto.util.JPAUtil;
-import repositories.AlunoRepository;
+import jakarta.persistence.EntityManager;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-	private static final Scanner scanner = new Scanner(System.in); // Scanner para entrada do usuário
+    private static final Scanner scanner = new Scanner(System.in);
 
-	public static void main(String[] args) {
-		int opcao;
-		// Estrutura de repetição do menu principal
-		do {
-			// Exibição do menu de opções
-			System.out.println("\n--- MENU ---");
-			System.out.println("1. Cadastrar aluno");
-			System.out.println("2. Listar alunos");
-			System.out.println("3. Cadastrar curso");
-			System.out.println("4. Listar cursos");
-			System.out.println("5. Matricular aluno em curso");
-			System.out.println("6. Listar matrículas");
-			System.out.println("7. Editar nome de aluno");
-			System.out.println("8. Excluir matrícula");
-			System.out.println("9. Buscar matrícula por CPF");
-			System.out.println("10. Limpar todos os dados");
-			System.out.println("11. Pesquisar aluno pelo nome");
-			System.out.println("0. Sair");
-			System.out.print("Escolha: ");
-			
-			opcao = scanner.nextInt(); // Lê a opção digitada
-			scanner.nextLine(); // Limpa o buffer de entrada (evita erros de leitura)
+    public static void main(String[] args) {
+        if (!fazerLogin()) {
+            System.out.println("Encerrando o sistema.");
+            return;
+        }
 
-			// Estrutura de decisão com switch para executar a ação escolhida
-			switch (opcao) {
-				case 1 -> AlunoController.cadastrarAluno(scanner); // Chama o método de cadastro de aluno
-				case 2 -> AlunoController.listarAlunos(); // Lista todos os alunos cadastrados
-				case 3 -> CursoController.cadastrarCurso(scanner); // Cadastra um novo curso
-				case 4 -> CursoController.listarCursos(); // Lista todos os cursos
-				case 5 -> MatriculaController.matricular(scanner); // Matricula um aluno em um curso
-				case 6 -> MatriculaController.listar(); // Lista todas as matrículas
-				case 7 -> AlunoController.editarNome(scanner); // Edita o nome de um aluno
-				case 8 -> MatriculaController.excluir(scanner); // Exclui uma matrícula
-				case 9 -> MatriculaController.buscarPorCpf(scanner); // Busca matrícula pelo CPF do aluno
-				case 10 -> MatriculaController.limparTudo(); // Apaga todos os dados do sistema
-				case 11 -> AlunoController.buscarnome(scanner); // Busca aluno pelo nome
-				case 0 -> System.out.println("Encerrando..."); // Encerra o programa
-				default -> System.out.println("Opção inválida."); // Trata entradas inválidas
-			}
+        int opcao;
+        do {
+            limparConsole();
+            System.out.println("--- MENU ---");
+            System.out.println("1. Cadastrar aluno");
+            System.out.println("2. Listar alunos");
+            System.out.println("3. Cadastrar curso");
+            System.out.println("4. Listar cursos");
+            System.out.println("5. Matricular aluno em curso");
+            System.out.println("6. Listar matriculas");
+            System.out.println("7. Editar nome de aluno");
+            System.out.println("8. Excluir matrícula");
+            System.out.println("9. Buscar matrícula por CPF");
+            System.out.println("10. Limpar todos os dados");
+            System.out.println("0. Sair");
+            System.out.print("Escolha: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine();
 
-		} while (opcao != 0); // O loop continua até o usuário escolher sair
+            switch (opcao) {
+                case 1 -> AlunoController.cadastrarAluno(scanner);
+                case 2 -> AlunoController.listarAlunos();
+                case 3 -> CursoController.cadastrarCurso(scanner);
+                case 4 -> CursoController.listarCursos();
+                case 5 -> MatriculaController.matricular(scanner);
+                case 6 -> MatriculaController.listar();
+                case 7 -> AlunoController.editarNome(scanner);
+                case 8 -> MatriculaController.excluir(scanner);
+                case 9 -> MatriculaController.buscarPorCpf(scanner);
+                case 10 -> MatriculaController.limparTudo();
+                case 0 -> System.out.println("Encerrando...");
+                default -> System.out.println("Opção inválida.");
+            }
+        } while (opcao != 0);
 
-		JPAUtil.close(); // Encerra a conexão com o JPA/Hibernate
-	}
+        JPAUtil.close();
+    }
 
-	// Método auxiliar (provavelmente usado para testes)
-	public static void main1(String[] args) {
-		AlunoRepository repo = new AlunoRepository(); // Cria um repositório para buscar alunos
+    public static void limparConsole() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            System.out.println("Não foi possível limpar a tela.");
+        }
+    }
 
-		List<Aluno> alunos = repo.buscarPorNome("ana"); // Busca alunos cujo nome contém "ana"
+    public static void aguardarEnter() {
+        System.out.print("\nPressione ENTER para continuar...");
+        scanner.nextLine();
+    }
 
-		// Imprime os resultados encontrados
-		for (Aluno a : alunos) {
-			System.out.println("ID: " + a.getId() + " | Nome: " + a.getNome());
-		}
-	}
+    public static boolean fazerLogin() {
+        EntityManager em = JPAUtil.getEntityManager();
+        System.out.println("=== LOGIN ===");
+        System.out.print("Login: ");
+        String login = scanner.nextLine();
+        System.out.print("Senha: ");
+        String senha = scanner.nextLine();
+
+        try {
+            Usuario usuario = em.createQuery(
+                    "FROM Usuario u WHERE u.login = :login AND u.senha = :senha", Usuario.class)
+                    .setParameter("login", login)
+                    .setParameter("senha", senha)
+                    .getSingleResult();
+
+            System.out.println("Login bem-sucedido! Bem-vindo, " + usuario.getLogin());
+            aguardarEnter();
+            limparConsole();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Usuario ou senha invalidos.");
+            return false;
+        } finally {
+            em.close();
+        }
+    }
 }

@@ -16,7 +16,7 @@ public class CursoController {
 		String nome;
 		// Loop para garantir que o nome inserido contenha apenas letras (com acentuação) e espaços
 		do {
-			System.out.print("Nome do curso (apenas letras): ");
+			System.out.print("Nome do curso (apenas letras): pinto");
 			nome = scanner.nextLine();
 		} while (!nome.matches("[a-zA-ZÀ-ÿ ]+")); // Regex para validar apenas letras (inclusive acentuadas)
 

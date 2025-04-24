@@ -70,8 +70,8 @@ public class MatriculaController {
 
 		System.out.println("\n--- MATRÍCULAS ---");
 		for (Matricula m : matriculas) {
-			System.out.println("ID: " + m.getId()
-				+ " | Aluno: " + m.getAluno().getNome()
+			System.out.println("ID: " + m.getId()  
+				+ " | Aluno: " + m.getAluno().getNome() //join implicito
 				+ " | Curso: " + m.getCurso().getNome());
 		}
 		em.close();
