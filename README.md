@@ -21,16 +21,78 @@ O sistema foi desenvolvido como parte de um trabalho da disciplina de **Programa
 
 ## 📁 Estrutura do Projeto
 
-AcademicoDB/
-├── PM2-MatriculaDB/
-│   ├── src/
-│   │   ├── aluno/
-│   │   ├── curso/
-│   │   └── ...
-│   └── README.md
-├── banco-de-dados/
-│   └── scripts.sql
-└── README.md
+└───PM2-MatriculaDB
+    │   .classpath
+    │   .gitignore
+    │   .project
+    │   pom.xml
+    │
+    ├───.settings
+    │       org.eclipse.jdt.core.prefs
+    │       org.eclipse.m2e.core.prefs
+    │
+    ├───src
+    │   └───main
+    │       ├───java
+    │       │   ├───com
+    │       │   │   └───projeto
+    │       │   │       │   Main.java
+    │       │   │       │
+    │       │   │       ├───controller
+    │       │   │       │       AlunoController.java
+    │       │   │       │       CursoController.java
+    │       │   │       │       MatriculaController.java
+    │       │   │       │
+    │       │   │       ├───model
+    │       │   │       │       Aluno.java
+    │       │   │       │       Curso.java
+    │       │   │       │       Matricula.java
+    │       │   │       │
+    │       │   │       └───util
+    │       │   │               JPAUtil.java
+    │       │   │
+    │       │   └───repositories
+    │       │           AlunoRepository.java
+    │       │
+    │       └───resources
+    │           └───META-INF
+    │                   hibernate.xml
+    │                   persistence.xml
+    │
+    └───target
+        ├───classes
+        │   ├───com
+        │   │   └───projeto
+        │   │       │   Main.class
+        │   │       │
+        │   │       ├───controller
+        │   │       │       AlunoController.class
+        │   │       │       CursoController.class
+        │   │       │       MatriculaController.class
+        │   │       │
+        │   │       ├───model
+        │   │       │       Aluno.class
+        │   │       │       Curso.class
+        │   │       │       Matricula.class
+        │   │       │
+        │   │       └───util
+        │   │               JPAUtil.class
+        │   │
+        │   ├───META-INF
+        │   │   │   hibernate.xml
+        │   │   │   MANIFEST.MF
+        │   │   │   persistence.xml
+        │   │   │
+        │   │   └───maven
+        │   │       └───com.projeto
+        │   │           └───matricula-console
+        │   │                   pom.properties
+        │   │                   pom.xml
+        │   │
+        │   └───repositories
+        │           AlunoRepository.class
+        │
+        └───test-classes
 
 
 ## ⚙️ Como Executar
