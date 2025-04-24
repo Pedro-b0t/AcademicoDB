@@ -93,7 +93,7 @@ O sistema foi desenvolvido como parte de um trabalho da disciplina de **Programa
         │           AlunoRepository.class
         │
         └───test-classes
-
+```
 
 ## ⚙️ Como Executar
 
